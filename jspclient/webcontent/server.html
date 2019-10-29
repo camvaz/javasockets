@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+        <input type="submit" id="boton" >
+<div id="resultados">
+</div>
+
+</body>
+
+<script src="utils/jquery.js"></script>
+<script>
+let x;
+x = $(document);
+x.ready(inicializarEventos);
+
+function inicializarEventos(){
+        let x;
+        x=$("#boton");
+        x.click(presionEnlace);
+}
+
+function presionEnlace(){
+        $.ajax({
+                async:true,
+                type: "POST",
+                dataType: "html",
+                contentType: "application/x-www-form-urlencoded",
+                url: "Ledger.jsp",
+                data: "",
+                beforeSend:inicioEnvio,
+                success:llegadaDatos,
+                timeout:4000,
+                error:problemas
+
+        });
+        return false;
+}
+
+function inicioEnvio(){
+        var x = $("#resultados");
+        x.html('<img src="loading.svg" width="41" height="41" class="rounded mx-auto d-block">');
+}
+
+function llegadaDatos(datos){
+        $("#resultados").text(datos);
+}
+
+function problemas(){
+        $("#resultados").text("Sv problem");
+}
+
+</script>
+</html>
